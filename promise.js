@@ -1,12 +1,7 @@
-class Bluebird extends Promise {
-    tap(onFulfilled) {
-        return Bluebird.resolve((async () => { 
-            const value = await this;
-            await onFulfilled(value);
-            return value;
-        })());
-    }
+class Bluebird extends Promise {}
 
+
+class Bluebird extends Promise {
     props() {
         return Bluebird.resolve((async () => {
             const value = await this;
@@ -25,4 +20,8 @@ class Bluebird extends Promise {
     static props(o) { return Bluebird.resolve(o).props()}
 }
 
+require('./promiseFns/tap')(Bluebird);
+require('./promiseFns/spread')(Bluebird);
+
 module.exports = Bluebird;
+
