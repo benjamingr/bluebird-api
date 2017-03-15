@@ -1,8 +1,10 @@
 class Bluebird extends Promise {
-    async tap(onFulfilled) {
-        const value = await this;
-        await onFulfilled(value);
-        return value;
+    tap(onFulfilled) {
+        return Bluebird.resolve((async () => { 
+            const value = await this;
+            await onFulfilled(value);
+            return value;
+        })());
     }
 }
 
