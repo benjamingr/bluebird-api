@@ -52,7 +52,6 @@ describe("tap bluebird original tests", () => {
         return Promise.resolve("test").tap(function() {
             throw err;
         }).tap(assert.fail).then(assert.fail, function(e){
-            console.log("HERE");
             assert(err === e);
         });
     });
