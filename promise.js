@@ -10,6 +10,7 @@ require('./promiseFns/method')(Bluebird);
 require('./promiseFns/each')(Bluebird);
 require('./promiseFns/mapSeries')(Bluebird);
 require('./promiseFns/map')(Bluebird);
+require('./promiseFns/get')(Bluebird);
 require('./promiseFns/call')(Bluebird);
 require('./promiseFns/finally')(Bluebird);
 
