@@ -2,16 +2,18 @@ const assert = require("assert");
 const Promise = require("../promise.js");
 var join = Promise.join;
 
-describe("indexed getter", async function() {
+describe("indexed getter", function() {
     var p = Promise.resolve([0, 1, 2, 3, 4, 5, 7, 5,10]);
-    specify.only("gets positive index", function() {
-        var first = await p.get(0);
-        var fourth = await p.get(3);
-        var last = await p.get(8);
+    specify("gets positive index", function() {
+        var first = p.get(0);
+        var fourth = p.get(3);
+        var last = p.get(8);
 
-        assert(first === 0);
-        assert(fourth === 3);
-        assert(last === 10);
+        return join(first, fourth, last, function(a, b, c) {
+            assert(a === 0);
+            assert(b === 3);
+            assert(c === 10);
+        });
     });
 
     specify("gets negative index", function() {
