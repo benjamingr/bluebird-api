@@ -13,6 +13,7 @@ require('./promiseFns/get')(Bluebird);
 require('./promiseFns/call')(Bluebird);
 require('./promiseFns/finally')(Bluebird);
 require('./promiseFns/throw')(Bluebird);
+require('./promiseFns/catchReturn')(Bluebird);
 
 module.exports = Bluebird;
 
