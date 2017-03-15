@@ -92,5 +92,4 @@ describe("bluebird's tests for map", () => {
             assert.fail
         );
     });
-
 });
