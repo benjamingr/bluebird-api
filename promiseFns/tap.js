@@ -2,7 +2,6 @@ module.exports = (Bluebird) => {
     Bluebird.prototype.tap = function tap(onFullfiled) {
         return Bluebird.resolve((async () => {
             const value = await this;
-            console.log(value);
             await onFullfiled(value);
             return value;
         })());
