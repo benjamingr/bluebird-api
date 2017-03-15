@@ -5,7 +5,7 @@ module.exports = (Bluebird) => {
             if(typeof value !== "object" || value == null) {
                 throw new TypeError("Expected an object passed to `.props`, got " + typeof value + " instead");
             }
-            for(const key of  Object.keys(value)) {
+            for(const key of Object.keys(value)) {
                 ret[key] = await value[key];
             }
             return ret;
