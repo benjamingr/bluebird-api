@@ -7,6 +7,8 @@ require('./promiseFns/join')(Bluebird);
 require('./promiseFns/try')(Bluebird);
 require('./promiseFns/method')(Bluebird);
 require('./promiseFns/each')(Bluebird);
+require('./promiseFns/reduce')(Bluebird);
+
 
 module.exports = Bluebird;
 
