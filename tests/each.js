@@ -23,18 +23,21 @@ function thenabled(val, arr) {
     };
 }
 
+if(!Promise.delay) { // for test independence
+    Promise.delay = ms => new Promise(r => setTimeout(r, ms));
+}
+
 describe("Promise.each", function() {
 
-    it.skip("should return the array's values mapped", function() {
+    it("should not return the array's values mapped", function() {
         var a = [promised(1), promised(2), promised(3)];
         var b = [];
-        return Promise.resolve(a).mapSeries(function(val) {
+        return Promise.resolve(a).each(function(val) {
             b.push(3-val);
             return val + 2;
         }).then(function(ret) {
-            assert.deepEqual(ret, [3,4,5]);
-            assert.deepEqual(b, [2, 1, 0]);
-        });
+            assert.deepEqual(ret, [1,2,3]);
+        }).catch(assert.fail);
     });
 
     it("takes value, index and length", function() {
@@ -47,7 +50,7 @@ describe("Promise.each", function() {
         });
     });
 
-    it.skip("waits for returned promise before proceeding next", function() {
+    it("waits for returned promise before proceeding next", function() {
         var a = [promised(1), promised(2), promised(3)];
         var b = [];
         return Promise.resolve(a).each(function(value) {
@@ -94,13 +97,10 @@ describe("Promise.prototype.each", function() {
 
     it("should return the array's values", function() {
         var a = [promised(1), promised(2), promised(3)];
-        var b = [];
         return Promise.resolve(a).each(function(val) {
-            b.push(3-val);
             return val;
         }).then(function(ret) {
             assert.deepEqual(ret, [1,2,3]);
-            assert.deepEqual(b, [2, 1, 0]);
         });
     });
 
@@ -115,7 +115,7 @@ describe("Promise.prototype.each", function() {
         });
     });
 
-    it.skip("waits for returned promise before proceeding next", function() {
+    it("waits for returned promise before proceeding next", function() {
         var a = [promised(1), promised(2), promised(3)];
         var b = [];
         return Promise.resolve(a).each(function(value) {

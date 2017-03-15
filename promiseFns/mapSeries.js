@@ -1,15 +1,18 @@
 module.exports = (Bluebird) => {
-    Bluebird.prototype.each = function each(iterator) {
+    Bluebird.prototype.mapSeries = function each(iterator) {
       return Bluebird.resolve((async () => { 
-        const promises = await Promise.all(await this);
+        const promises = await this;
         const length = promises.length;
+        let ret = Array(length);
         
         for(let index = 0; index <= promises.length-1; index++){
           const value = await iterator(await promises[index], index, length);
+          ret = ret.concat(value);
         };
-        return promises;
+        
+        return ret;
       })());
     };
 
-    Bluebird.each = (promise, iterator) => Bluebird.resolve(promise).each(iterator);
+    Bluebird.mapSeries = (promise, iterator) => Bluebird.resolve(promise).mapSeries(iterator);
 };
