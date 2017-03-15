@@ -1,6 +1,3 @@
-class Bluebird extends Promise {}
-
-
 class Bluebird extends Promise {
     props() {
         return Bluebird.resolve((async () => {
