@@ -1,5 +1,7 @@
 class Bluebird extends Promise {}
 
-Bluebird.prototype.tap = require('./promiseFns/tap');
+require('./promiseFns/tap')(Bluebird);
 
 module.exports = Bluebird;
+
+// require('./promiseFns/spread');
