@@ -12,7 +12,7 @@ function throttle(fn, concurrency = 20) {
         const worker = workers.pop();
         if (worker === undefined) {
             let resolve, reject;
-            var promise = new Promise((res, rej) => {
+            const promise = new Promise((res, rej) => {
                 resolve = res;
                 reject = rej;
             });
