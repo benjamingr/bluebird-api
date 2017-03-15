@@ -1,10 +1,10 @@
 module.exports = (Bluebird) => {
-    Promise.join = async function join(...args) {
+    Bluebird.join = async function join(...args) {
         var last = args.pop();
         if(typeof last !== "function") {
             throw new TypeError("Promise.join's last parameter should be a function")
         }
-        var values = await Promise.all(args)
+        var values = await Bluebird.all(args)
         return await last(...values);
     };
 };

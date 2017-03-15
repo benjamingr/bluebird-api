@@ -4,6 +4,8 @@ require('./promiseFns/tap')(Bluebird);
 require('./promiseFns/props')(Bluebird);
 require('./promiseFns/spread')(Bluebird);
 require('./promiseFns/join')(Bluebird);
+require('./promiseFns/try')(Bluebird);
+require('./promiseFns/method')(Bluebird);
 
 module.exports = Bluebird;
 
