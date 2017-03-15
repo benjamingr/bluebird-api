@@ -1,4 +1,4 @@
-const util = require("util");
+const util = require("./util");
 module.exports = (Bluebird) => {
     Bluebird.map = (x, mapper, opts) => Bluebird.resolve(x).map(mapper, opts);
 
