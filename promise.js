@@ -1,6 +1,5 @@
 class Bluebird extends Promise {}
 
-
 require('./promiseFns/tap')(Bluebird);
 require('./promiseFns/props')(Bluebird);
 require('./promiseFns/spread')(Bluebird);
@@ -13,6 +12,10 @@ require('./promiseFns/map')(Bluebird);
 require('./promiseFns/get')(Bluebird);
 require('./promiseFns/call')(Bluebird);
 require('./promiseFns/finally')(Bluebird);
+require('./promiseFns/reduce')(Bluebird);
+require('./promiseFns/throw')(Bluebird);
+require('./promiseFns/catchReturn')(Bluebird);
+require('./promiseFns/catchThrow')(Bluebird);
 require('./promiseFns/coroutine')(Bluebird);
 
 module.exports = Bluebird;
