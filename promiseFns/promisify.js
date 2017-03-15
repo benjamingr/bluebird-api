@@ -1,8 +1,13 @@
 module.exports = (Bluebird) => {
-    Bluebird.promisify = function promisify(fn, thisArg = null) {
+    Bluebird.promisify = function promisify(fn, { context = null, multiArgs = false } = {}) {
         return function (...args) {
-            return new Bluebird((resolve, reject) => console.log([...args, (err, value) => err ? reject(err) : resolve(value)]) || 
-                fn.apply(thisArg, [...args, (err, value) => err ? reject(err) : resolve(value)]));
+            return new Bluebird((resolve, reject) => {
+                const resolver = multiArgs ?
+                    (err, ...values) => err ? reject(err) : resolve(values) :
+                    (err, value) => err ? reject(err) : resolve(value);
+
+                return fn.apply(context, [...args, resolver]);
+            });
         }
     };
 };
