@@ -1,9 +1,5 @@
-class Bluebird extends Promise {
-    async tap(onFulfilled) {
-        const value = await this;
-        await onFulfilled(value);
-        return value;
-    }
-}
+class Bluebird extends Promise {}
+
+Bluebird.prototype.tap = require('./promiseFns/tap');
 
 module.exports = Bluebird;
