@@ -16,15 +16,5 @@ module.exports = (Bluebird) => {
         })());
     };
 
-    Bluebird.get = function get(promise, prop) {
-        return Bluebird.resolve((async () => {
-            const value = await promise;
-		    const isIndex = (typeof prop === "number");
-            if (!isIndex) {
-                return value[prop]
-            } else {
-                return indexedGetter(value, prop)
-            }
-        })());
-    };
+    Bluebird.get = (promise, prop) => Bluebird.resolve(promise).get(prop);
 };
