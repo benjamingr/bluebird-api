@@ -1,5 +1,6 @@
 module.exports = {
-    throttle
+    throttle,
+    isPromise
 };
 
 
@@ -31,4 +32,8 @@ function throttle(fn, concurrency = 20) {
         });
         return worker;
     }
+}
+
+function isPromise(obj) {
+    return obj && obj.then && (typeof(obj.then) === 'function');
 }
