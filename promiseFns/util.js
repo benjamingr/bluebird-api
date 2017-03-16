@@ -6,13 +6,13 @@ module.exports = {
 
 // slow implementation to start with. Should be "fast enough" for small concurrency values < 100;
 function throttle(fn, concurrency = 20) {
-    var workers = Array(concurrency).fill(Promise.resolve());
-    var work = [];
+    const workers = Array(concurrency).fill(Promise.resolve());
+    const work = [];
     return function (...args) {
-        var worker = workers.pop();
+        const worker = workers.pop();
         if (worker === undefined) {
             let resolve, reject;
-            var promise = new Promise((res, rej) => {
+            const promise = new Promise((res, rej) => {
                 resolve = res;
                 reject = rej;
             });
@@ -22,7 +22,7 @@ function throttle(fn, concurrency = 20) {
         worker = worker.then(() => (fn(...args), null));
         worker.then(function pump() {
             if (work.length) {
-                let {resolve, reject, args} = work.pop();
+                const {resolve, reject, args} = work.pop();
                 worker = worker.then(() => fn(...args)).then(resolve, reject).then(pump);
             } else {
                 workers.push(worker);
