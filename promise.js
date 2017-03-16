@@ -1,4 +1,5 @@
 class Bluebird extends Promise {}
+Bluebird.TypeError = TypeError; // Bluebird.TypeError is used in tests
 
 require('./promiseFns/tap')(Bluebird);
 require('./promiseFns/props')(Bluebird);
@@ -22,6 +23,7 @@ require('./promiseFns/catchThrow')(Bluebird);
 require('./promiseFns/caught')(Bluebird);
 require('./promiseFns/coroutine')(Bluebird);
 require('./promiseFns/cast')(Bluebird);
+require('./promiseFns/fromCallback')(Bluebird);
 
 module.exports = Bluebird;
 
