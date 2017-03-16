@@ -6,11 +6,4 @@ module.exports = (Bluebird) => {
             return any
         })());
     };
-
-    Bluebird.return =
-    Bluebird.thenReturn = function thenReturn(promise, any) {
-        return Bluebird.resolve((async () => {
-            return any
-        })());
-    };
 };
