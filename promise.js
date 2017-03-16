@@ -12,6 +12,7 @@ require('./promiseFns/mapSeries')(Bluebird);
 require('./promiseFns/map')(Bluebird);
 require('./promiseFns/get')(Bluebird);
 require('./promiseFns/call')(Bluebird);
+require('./promiseFns/reflect')(Bluebird);
 require('./promiseFns/finally')(Bluebird);
 require('./promiseFns/return')(Bluebird);
 require('./promiseFns/reduce')(Bluebird);
