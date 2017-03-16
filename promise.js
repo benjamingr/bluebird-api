@@ -17,7 +17,9 @@ require('./promiseFns/reduce')(Bluebird);
 require('./promiseFns/throw')(Bluebird);
 require('./promiseFns/catchReturn')(Bluebird);
 require('./promiseFns/catchThrow')(Bluebird);
+require('./promiseFns/caught')(Bluebird);
 require('./promiseFns/coroutine')(Bluebird);
+require('./promiseFns/cast')(Bluebird);
 
 module.exports = Bluebird;
 
