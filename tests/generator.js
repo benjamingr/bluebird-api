@@ -8,7 +8,9 @@ const Promise = require("../promise.js");
 testUtils.addDeferred(Promise);
 Promise.TypeError = TypeError;
 
-//original tests
+// original tests. untouched, but some commented out
+// from: https://github.com/petkaantonov/bluebird/blob/master/test/mocha/generator.js
+
 function get(arg) {
     return {
         then: function(ful, rej) {

@@ -3,8 +3,8 @@ const util = require("./util");
 async function runGenerator(generator, args, thisContext) { 
     let iterator = generator.apply(thisContext, args);
 
-    const next = ({ value, error }) => {
-        if (error) {
+    const next = ({ value, error, errorMode }) => {
+        if (errorMode) {
             return iterator.throw(error);
         }
         else {
@@ -12,15 +12,20 @@ async function runGenerator(generator, args, thisContext) {
         }
     }
 
-    let value, done, error;
+    let value, done, errorMode, error;
     do {
-        ({ value, done, error } = next({ value, error }));
+        // get next value then reset next() input variables
+        ({ value, done } = next({ value, error, errorMode }));
+        errorMode = false; // I need this boolean instead of `Boolean(error)` since some people `throw undefined;` evidently..
+        error = undefined;
+
 
         if (Array.isArray(value)) {
             value = Promise.all(value);
         }
         else if (!util.isPromise(value)) {
             error = new TypeError('OMG, Not a promise.');
+            errorMode = true;
         }
 
         try {
@@ -29,6 +34,7 @@ async function runGenerator(generator, args, thisContext) {
         catch (ex) {
             value = undefined;
             error = ex;
+            errorMode = true;
         }
     } while (!done);
 
@@ -37,17 +43,13 @@ async function runGenerator(generator, args, thisContext) {
 
 module.exports = (Bluebird) => {
     Bluebird.coroutine = function(generator) {
-        return (...args) => {
+        return function(...args) {
             let result;
 
-            try {
-                result = runGenerator(generator, args, this);
-            }
-            catch (ex) {
-                return Bluebird.reject(ex);
-            }
+            // native async/await returns a native promise, so...
+            result = runGenerator(generator, args, this);
 
-            // wrap in Promise.resolve so this returns a "fake bluebird" promise
+            // ... wrap in Promise.resolve so this returns a "fake bluebird" promise
             return Bluebird.resolve(result);
         }
     }
