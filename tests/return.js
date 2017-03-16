@@ -90,36 +90,17 @@ describe("thenReturn", function () {
         });
     });
 
-    // describe("promises", function() {
-    //     describe("which fulfill", function() {
-    //         var d1 = Promise.defer();
-    //         var d2 = Promise.defer();
-    //         specify("already", wrap(returnThenable, Promise.resolve(10), 10));
-    //         specify("immediately", wrap(returnThenable, d1.promise, 10));
-    //         specify("eventually", wrap(returnThenable, d2.promise, 10));
-    //         d1.fulfill(10);
-    //         setTimeout(function(){
-    //             d2.fulfill(10);
-    //         }, 1);
-    //     });
-    //     describe("which reject", function() {
-    //         var d1 = Promise.defer();
-    //         var d2 = Promise.defer();
-    //         var alreadyRejected = Promise.reject(10);
-    //         alreadyRejected.then(assert.fail, function(){});
-    //         describe("already", wrap(returnThenableReject, alreadyRejected, 10));
-    //         describe("immediately", wrap(returnThenableReject, d1.promise, 10));
-    //         describe("eventually", wrap(returnThenableReject, d2.promise, 10));
-    //         d1.reject(10);
-    //         setTimeout(function(){
-    //             d2.reject(10);
-    //         }, 1);
+    describe("promises", function() {
+        describe("which fulfill", function() {
+            specify("already", wrap(returnThenable, Promise.resolve(10), 10));
+        });
+        describe("which reject", function() {
+            var alreadyRejected = Promise.reject(10);
+            alreadyRejected.then(assert.fail, function(){});
+            specify("already", wrap(returnThenableReject, alreadyRejected, 10));
+        });
 
-    //         d1.promise.caught(function(){});
-    //         d2.promise.caught(function(){});
-    //     });
-
-    // });
+    });
 
     specify("doesn't swallow errors", function() {
         var e = {};

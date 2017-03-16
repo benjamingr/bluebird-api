@@ -1,18 +1,16 @@
 module.exports = (Bluebird) => {
 
     Bluebird.prototype.return =
-    Bluebird.prototype.thenReturn = function thenReturn(prop) {
+    Bluebird.prototype.thenReturn = function thenReturn(any) {
         return Bluebird.resolve((async () => {
-            if(prop instanceof Bluebird) prop.catch(function() {})
-            return prop
+            return any
         })());
     };
 
     Bluebird.return =
-    Bluebird.thenReturn = function thenReturn(promise, obj) {
+    Bluebird.thenReturn = function thenReturn(promise, any) {
         return Bluebird.resolve((async () => {
-            if(prop instanceof Bluebird) prop.catch(function() {})
-            return prop
+            return any
         })());
     };
 };
