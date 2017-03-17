@@ -73,16 +73,17 @@ async function processValue({ value, yieldHandlers }) {
 module.exports = (Bluebird) => {
     Bluebird.coroutine = function(generator, { yieldHandler = null } = {}) {
 
-        // add the provded yieldHandler to the global onces, if provided.
-        let allYieldHandlers;
-        if (yieldHandler) {
-            allYieldHandlers = [...yieldHandlers, yieldHandler];
-        }
-        else {
-            allYieldHandlers = yieldHandlers;
-        }
-
         return function(...args) {
+
+            // add the provded yieldHandler to the global onces, if provided.
+            let allYieldHandlers;
+            if (yieldHandler) {
+                allYieldHandlers = [...yieldHandlers, yieldHandler];
+            }
+            else {
+                allYieldHandlers = yieldHandlers;
+            }
+            
             let result = runGenerator(generator, args, allYieldHandlers, this);
 
             // native async/await returns a native promise,
