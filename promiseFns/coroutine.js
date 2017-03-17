@@ -78,12 +78,12 @@ module.exports = (Bluebird) => {
             // add the provded yieldHandler to the global onces, if provided.
             let allYieldHandlers;
             if (yieldHandler) {
-                allYieldHandlers = [...yieldHandlers, yieldHandler];
+                allYieldHandlers = [ yieldHandler, ...yieldHandlers];
             }
             else {
                 allYieldHandlers = yieldHandlers;
             }
-            
+
             let result = runGenerator(generator, args, allYieldHandlers, this);
 
             // native async/await returns a native promise,
