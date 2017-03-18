@@ -1,31 +1,32 @@
 {
-    "name": "bluebird-api",
-    "version": "1.0.0",
-    "description": "Bluebird compatible API for native promise subclass",
-    "main": "index.js",
-    "directories": {
-        "test": "tests"
-    },
-    "scripts": {
-        "test": "mocha tests",
-        "test-debug": "mocha --debug-brk tests"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/benjamingr/bluebird-api.git"
-    },
-    "keywords": [
-        "promise",
-        "bluebird"
-    ],
-    "author": "",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/benjamingr/bluebird-api/issues"
-    },
-    "homepage": "https://github.com/benjamingr/bluebird-api#readme",
-    "devDependencies": {
-        "mocha": "^3.2.0",
-        "assert": "^1.4.1"
-    }
+  "name": "bluebird-api",
+  "version": "1.0.0",
+  "description": "Bluebird compatible API for native promise subclass",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests",
+    "test-debug": "mocha --debug-brk tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjamingr/bluebird-api.git"
+  },
+  "keywords": [
+    "promise",
+    "bluebird"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benjamingr/bluebird-api/issues"
+  },
+  "homepage": "https://github.com/benjamingr/bluebird-api#readme",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^3.2.0",
+    "promises-aplus-tests": "^2.1.2"
+  }
 }
