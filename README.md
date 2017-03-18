@@ -1,7 +1,7 @@
 # bluebird-api
-Bluebird compatible API on top of native promises for perf testing.
+[Bluebird](https://github.com/petkaantonov/bluebird) compatible API on top of native promises for perf testing.
 
-WIP
+WIP - contributions welcome.
 
 http://bluebirdjs.com/docs/api-reference.html
 
