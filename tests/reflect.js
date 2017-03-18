@@ -33,3 +33,21 @@ describe("reflect", () => {
         assert.equal(value, "Zirak loves jQuery");
     });
 });
+
+
+describe("original Bluebird tests", function() {
+    it("reflects", () => {
+        return Promise.resolve(1).reflect().then(function(inspection) {
+            //assert(inspection instanceof Promise.PromiseInspection);
+            assert(inspection.isFulfilled());
+            assert(inspection.value() === 1);
+        });
+    });
+    it("reflects error", () => {
+        return Promise.reject(1).reflect().then(function(inspection) {
+            //assert(inspection instanceof Promise.PromiseInspection);
+            assert(inspection.isRejected());
+            assert(inspection.reason() === 1);
+        });
+    });
+});

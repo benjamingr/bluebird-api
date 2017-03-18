@@ -1,7 +1,7 @@
 "use strict";
 
-var assert = require("assert");
-var testUtils = require("./helpers/util.js");
+const assert = require("assert");
+const testUtils = require("./helpers/util.js");
 
 const Promise = require("../promise.js");
 
