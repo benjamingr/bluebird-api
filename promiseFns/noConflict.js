@@ -1,4 +1,5 @@
 module.exports = (Bluebird) => {
-    return new Bluebird.copy;
-    // actual code in promise.js, this here for consistency
+    console.error("Please do not call noConflict with bluebird-api, simply do not import it!");
+    console.error("See getNewLibraryCopy for copying bluebird");
+    
 };
