@@ -63,7 +63,7 @@ describe("non identifier getters", function() {
         });
     });
 
-    specify.skip("overflow cache", function() {
+    specify("overflow cache", function() {
         var a = new Array(1024);
         var o = {};
         for (var i = 0; i < a.length; ++i) {
@@ -72,8 +72,8 @@ describe("non identifier getters", function() {
         }
         var b = Promise.map(a, function(item, index) {
             return Promise.resolve(o).get(a[index]);
-        }).filter(function(value, index) {
-            return value === index * 2;
+        }).then(function(items) {
+            return items.filter((value, index) => value === index * 2);
         }).then(function(values) {
             assert.strictEqual(values.length, a.length);
         });

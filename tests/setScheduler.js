@@ -54,6 +54,7 @@ describe("setScheduler", () => {
         await Promise.resolve().then(() => {}).then(() => {})
         assert.equal(x, 2);
     });
+    after(() => Promise.setScheduler.disable());
 });
 
 describe("bluebird schedule tests", () => {
@@ -65,4 +66,5 @@ describe("bluebird schedule tests", () => {
         }
         assert.fail();
     });
+    after(() => Promise.setScheduler.disable());
 })

@@ -22,4 +22,7 @@ module.exports = (Bluebird) => {
             )[originalThen](onFulfill, onReject);
         };
     };
+    // hook for tests
+    Bluebird.setScheduler.disable = () => 
+        Bluebird.prototype.then = Bluebird.prototype[originalThen];
 };
