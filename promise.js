@@ -1,5 +1,4 @@
 function factory() {
-
     class Bluebird extends Promise {}
     Bluebird.TypeError = TypeError; // Bluebird.TypeError is used in tests
 
@@ -33,7 +32,11 @@ function factory() {
     return Bluebird;
 }
 const copy = factory();
-copy.getNewLibraryCopy = factory;
+copy.getNewLibraryCopy = () => {
+    const newCopy = factory;
+    newCopy.getNewLibraryCopy = copy.getNewLibraryCopy;
+    return newCopy;
+};
 
 module.exports = copy;
 
