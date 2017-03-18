@@ -33,6 +33,7 @@ function factory() {
     require('./promiseFns/done')(Bluebird);
     require('./promiseFns/suppressUnhandledRejections')(Bluebird);
     Bluebird.config = (obj) => {}; // no config
+    Bluebird.longStackTraces = () => {}; // long stack traces by debugger and not bb
     return Bluebird;
 }
 const copy = factory();
