@@ -9,14 +9,17 @@ module.exports = (Bluebird) => {
     
     // it is important that we get a reference to then before it might be externally
     // modified
-    const originalThen = new Symbol();
+    const originalThen = Symbol();
     Bluebird.prototype[originalThen] = Bluebird.prototype.then; 
     Bluebird.setScheduler = function(scheduler) {
+        if(typeof scheduler !== "function") {
+            throw new TypeError("Passed non function to setScheduler");
+        }
         Bluebird.prototype.then = function then(onFulfill, onReject) {
             return this[originalThen](
                 v => new Promise(scheduler),
                 e => new Promise((_, r) => scheduler(r))
-            ).then(onFulfill, onReject);
+            )[originalThen](onFulfill, onReject);
         };
     };
 };
