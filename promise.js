@@ -29,6 +29,7 @@ function factory() {
     require('./promiseFns/setScheduler')(Bluebird);
     require('./promiseFns/asCallback')(Bluebird);
     require('./promiseFns/noConflict')(Bluebird);
+    require('./promiseFns/defer')(Bluebird);
     return Bluebird;
 }
 const copy = factory();
