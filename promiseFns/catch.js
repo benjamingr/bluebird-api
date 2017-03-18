@@ -46,7 +46,8 @@ const FILTER_CONFIGS = [
 
 function testFilter(filterArgument, error) {
     // get the right predicate function for the type of filter the user supplied.
-    const filterConfig = FILTER_CONFIGS.find(filterConfig => filterConfig.filterTest(filterArgument, error));
+    const filterConfig = FILTER_CONFIGS.find(filterConfig => 
+        filterConfig.filterTest(filterArgument, error));
     const { predicate } = filterConfig || {};
 
     // If not filters are valid, we jist return false. It's not an exception

@@ -25,6 +25,7 @@ function factory() {
     require('./promiseFns/catchThrow')(Bluebird);
     require('./promiseFns/reflect')(Bluebird);
     require('./promiseFns/catch')(Bluebird);
+    require('./promiseFns/error')(Bluebird);
     require('./promiseFns/coroutine')(Bluebird);
     require('./promiseFns/cast')(Bluebird);
     require('./promiseFns/fromCallback')(Bluebird);
