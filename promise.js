@@ -35,5 +35,5 @@ function factory() {
 const copy = factory();
 copy.getNewLibraryCopy = factory;
 
-module.exports = Bluebird;
+module.exports = copy;
 
