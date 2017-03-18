@@ -1,6 +1,6 @@
 module.exports = (Bluebird) => {
 
-    Promise.prototype.reflect = async function() {
+    Bluebird.prototype.reflect = async function() {
         try {
             const val = await this;
             return {
@@ -17,5 +17,7 @@ module.exports = (Bluebird) => {
                 isRejected() { return true; }
             };
         }
-    }
+    };
+    // backwards compat Bluebird 2 method that works in Bluebird 3
+    Bluebird.prototype.settle = arr => arr.map(Bluebird.resolve).map(x => x.reflect());
 };
