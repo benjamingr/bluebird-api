@@ -32,6 +32,7 @@ function factory() {
     require('./promiseFns/defer')(Bluebird);
     require('./promiseFns/done')(Bluebird);
     require('./promiseFns/suppressUnhandledRejections')(Bluebird);
+    require('./promiseFns/onPossiblyUnhandledRejection')(Bluebird);
     Bluebird.config = (obj) => {}; // no config
     Bluebird.longStackTraces = () => {}; // long stack traces by debugger and not bb
     Bluebird.hasLongStackTraces = () => false; 
