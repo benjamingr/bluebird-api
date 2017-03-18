@@ -33,7 +33,7 @@ function factory() {
 }
 const copy = factory();
 copy.getNewLibraryCopy = () => {
-    const newCopy = factory;
+    const newCopy = factory();
     newCopy.getNewLibraryCopy = copy.getNewLibraryCopy;
     return newCopy;
 };
