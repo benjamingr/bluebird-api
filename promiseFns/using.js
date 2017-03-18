@@ -24,13 +24,14 @@ module.exports = (Bluebird) => {
                 }, e => {
                     failed = true;
                     // one failed, clean up all the others.
-                    unsafe(() => {
+                    
+                    unsafe(async () => {
                         for(const item of results) {
                             if(!item) continue;
-                            item._cleanup();
+                            await item._cleanup();
                         }
+                        reject(e); // reject with the error
                     });
-                    reject(e); // reject with the error
                 })
             }
         })
@@ -38,7 +39,7 @@ module.exports = (Bluebird) => {
         .finally(() => new Promise((resolve) => {
             // clean up and wait for it
             
-            unsafe(() => {
+            unsafe(async () => {
                 for(const disposer of results) {
                     if(!disposer) continue; // guard against edge case
                     await disposer._cleanup();
