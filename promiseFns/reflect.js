@@ -1,9 +1,9 @@
 module.exports = (Bluebird) => {
-
     Bluebird.prototype.reflect = async function() {
         try {
             const val = await this;
             return {
+                isPending() { return false },
                 reason() { throw new Error(); }, 
                 value() { return val; }, 
                 isFulfilled() { return true; },
@@ -11,7 +11,8 @@ module.exports = (Bluebird) => {
             };
         } catch (e) {
             return {
-                value() { throw new Error("Tried to get value of rejected promise"); },
+                isPending() { return false },
+                value() { throw new Error("Tried to get the value of a rejected promise"); },
                 reason() { return e; }, 
                 isFulfilled() { return false; },
                 isRejected() { return true; }
