@@ -6,7 +6,6 @@ const Promise = require("../promise.js");
 
 // Things I added to make the tests run
 testUtils.addDeferred(Promise);
-Promise.TypeError = TypeError;
 
 // original tests. untouched, but some commented out
 // from: https://github.com/petkaantonov/bluebird/blob/master/test/mocha/generator.js
@@ -26,6 +25,10 @@ function fail(arg) {
         }
     };
 }
+
+Promise.coroutine.addYieldHandler(function(yieldedValue) {
+    if (Array.isArray(yieldedValue)) return Promise.all(yieldedValue);
+});
 
 var error = new Error("asd");
 
@@ -382,7 +385,6 @@ describe("Spawn", function() {
     });
 });
 
-/*
 describe("custom yield handlers", function() {
     specify("should work with timers", function() {
         var n = 0;
@@ -506,7 +508,6 @@ describe("custom yield handlers", function() {
         assert.fail();
     });
 });
-*/
 
 /*
 if (Promise.hasLongStackTraces()) {
