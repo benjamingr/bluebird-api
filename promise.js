@@ -32,6 +32,7 @@ function factory() {
     require('./promiseFns/defer')(Bluebird);
     require('./promiseFns/done')(Bluebird);
     require('./promiseFns/suppressUnhandledRejections')(Bluebird);
+    Bluebird.config = (obj) => {}; // no config
     return Bluebird;
 }
 const copy = factory();
