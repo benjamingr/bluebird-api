@@ -19,20 +19,33 @@ module.exports = (Bluebird) => {
                     }
                     results[i] = {resource, disposer};
                     if(--remaining === 0) {
-                        resolve(results);
-                    } 
+                        resolve(results.map(x => x.resource));
+                    }
                 }, e => {
                     failed = true;
+                    // one failed, clean up all the others.
                     unsafe(() => {
                         for(const item of results) {
                             if(!item) continue;
                             item._cleanup();
                         }
                     });
-                    // one failed, clean up all the others.
+                    reject(e); // reject with the error
                 })
             }
-        });
+        })
+        .then(fn) // run the actual function the user passed
+        .finally(() => new Promise((resolve) => {
+            // clean up and wait for it
+            
+            unsafe(() => {
+                for(const disposer of results) {
+                    if(!disposer) continue; // guard against edge case
+                    await disposer._cleanup();
+                }
+                resolve();
+            });
+        }));
     };
     // Bluebird.prototype.disposer = function disposer(fn) {
     //     return {
