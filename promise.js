@@ -26,6 +26,7 @@ require('./promiseFns/coroutine')(Bluebird);
 require('./promiseFns/cast')(Bluebird);
 require('./promiseFns/fromCallback')(Bluebird);
 require('./promiseFns/setScheduler')(Bluebird);
+require('./promiseFns/asCallback')(Bluebird);
 
 module.exports = Bluebird;
 
