@@ -9,24 +9,55 @@ function disposer() {
         obj.closed = true;
     });
 }
-describe("using", () => {
-    it("works with a single resource", async () => {
-        const d = disposer();
-        const o = await Promise.using(d, obj => {
-            assert(!obj.closed);
-            return obj;
-        });
-        console.log("GOT HERE", o);
-        assert(o.closed);
+function rejectedDisposer(v) {
+    const obj = {closed: false};
+    return Promise.reject(v).then(() => {
+        return obj;
+    }).disposer(() => {
+        obj.closed = true;
     });
+}
+describe("using", () => {
+    // it("works with a single resource", async () => {
+    //     const d = disposer();
+    //     const [o] = await Promise.using(d, (obj) => {
+    //         assert(!obj.closed);
+    //         return [obj];
+    //     });
+    //     assert(o.closed);
+    // });
     
     // it("works with a single promise", async () => {
-    //     const disposer = Promise.resolve(500).disposer()
+    //     let ran = false;
+    //     await Promise.using(Promise.resolve(3), (three) => {
+    //         ran = true;
+    //         assert.equal(three, 3);
+    //     });
+    //     assert(ran);
     // });
     
     // it("works with two succeeding resources", async () => {
-    //     const disposer = Promise.resolve
+    //     const [d, e] = [disposer(), disposer()];
+    //     const [o, t] = await Promise.using(d, e, (one, two) => {
+    //         assert(!one.closed);
+    //         assert(!two.closed);
+    //         return [one, two];
+    //     });
+    //     assert(o.closed);
+    //     assert(t.closed);
     // });
+    
+    it("works with a failing resource", async () => {
+        const d = rejectedDisposer(3);
+        let called = false;
+        const v = await (Promise.using(d, assert.fail)/*.catch(e => {
+            assert.equal(e, 3);
+            called = true;
+        }));*/);
+        console.log(v);
+        console.log("Test")
+        assert(called);
+    });
     
     // it("works with two failing resources", async () => {
     //     const disposer = Promise.resolve

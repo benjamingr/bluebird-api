@@ -5,7 +5,7 @@ module.exports = (Bluebird) => {
                 var res = await this;
             } catch (e) {
                 await onResolved();
-                return e;
+                throw e;
             }
             await onResolved();
             return res;

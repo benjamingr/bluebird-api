@@ -13,46 +13,51 @@ module.exports = (Bluebird) => {
             let failed = false;
             for(let i = 0; i < disposersAndFn.length; i++) {
                 const disposer = disposersAndFn[i];
-                disposer._use.then(resource => {
-                    if(failed) {
-                        //todo: hold reject until these finish?
-                        unsafe(() => disposer._cleanup());   
-                    }
-                    results[i] = {resource, disposer};
-                    if(--remaining === 0) {
-                        resolve(results.map(x => x.resource));
-                    }
-                }, e => {
+                const handleErr = e => {
                     failed = true;
-                    // one failed, clean up all the others.
-                    
+                    // one failed, clean up all the others.            
                     unsafe(async () => {
                         for(const item of results) {
                             if(!item) continue;
-                            await item._cleanup();
+                            if(!item.disposer) continue;
+                            await item.disposer._cleanup();
                         }
                         reject(e); // reject with the error
                     });
-                })
+                };
+                if(disposer._use) { 
+                    disposer._use.then(resource => {    
+                        if(failed) {
+                            //todo: hold reject until these finish?
+                            unsafe(() => disposer._cleanup());   
+                        }
+                        results[i] = {resource, disposer};
+                        if(--remaining === 0) {
+                            resolve(results.map(x => x.resource));
+                        }
+                    }, handleErr);
+                } else if (disposer.then) {
+                    Bluebird.resolve(disposer).then(resource => {
+                        results[i] = {resource};
+                        if(--remaining === 0) {
+                            resolve(results.map(x => x.resource));
+                        }
+                    }, handleErr);
+                }
             }
         })
-        .then(fn) // run the actual function the user passed
-        .tap(() => console.log("Before finally"))
-        .finally(() => console.log("Finally s") || new Bluebird((resolve) => {
+        .then(res => fn(...res)) // run the actual function the user passed
+        .finally(v => new Bluebird((resolve) => {
             // clean up and wait for it
-            
             unsafe(async () => {
                 for(const disposer of results) {
                     if(!disposer) continue; // guard against edge case
-                    console.log("Before disposeR");
+                    if(!disposer.disposer) continue; // promise and not disposer
                     await disposer.disposer._cleanup();
-                    console.log("Value", disposer.resource);
                 }
-                console.log("rrrr");
                 resolve();
             });
-        }).tap(() => console.log("new bb resolved")))
-        .tap(() => console.log("After finally"));
+        }));
     };
     // Bluebird.prototype.disposer = function disposer(fn) {
     //     return {
