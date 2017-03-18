@@ -1,12 +1,14 @@
 module.exports = (Bluebird) => {
-    Bluebird.prototype.finally = async function(onResolved) {
-        try {
-            var res = await this;
-        } catch (e) {
-            onResolved();
-            return e;
-        }
-        onResolved();
-        return res;
-    }
+    Bluebird.prototype.finally = function(onResolved) { 
+        return Bluebird.resolve((async () => {
+            try {
+                var res = await this;
+            } catch (e) {
+                await onResolved();
+                return e;
+            }
+            await onResolved();
+            return res;
+        })());
+    };
 };
