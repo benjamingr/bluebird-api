@@ -31,6 +31,7 @@ function factory() {
     require('./promiseFns/noConflict')(Bluebird);
     require('./promiseFns/defer')(Bluebird);
     require('./promiseFns/done')(Bluebird);
+    require('./promiseFns/suppressUnhandledRejections')(Bluebird);
     return Bluebird;
 }
 const copy = factory();
