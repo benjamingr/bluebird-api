@@ -1,5 +1,6 @@
 module.exports = function (Bluebird) {
-     class AggregateError extends Error {
+    require("./OperationalError.js")(Bluebird);
+     class AggregateError extends Bluebird.OperationalError {
          constructor(message) {
              super(message);
              this.length = 0;

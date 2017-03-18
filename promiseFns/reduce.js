@@ -19,7 +19,7 @@ module.exports = (Bluebird) => {
         };
         
         return ret;
-        })());
+      })());
     };
 
     Bluebird.reduce = (promise, reducer, initialValue) => Bluebird.resolve(promise).reduce(reducer, initialValue);

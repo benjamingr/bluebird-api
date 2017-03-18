@@ -9,6 +9,9 @@ describe("AggregateError", () => {
     it("is an error subclass", () => {
         assert(new Promise.AggregateError() instanceof Error);
     });
+    it("is operational", () => {
+        assert((new Promise.AggregateError()).isOperational);
+    });
     it("has a forEach property", () => {
         assert("forEach" in (new Promise.AggregateError));
     });

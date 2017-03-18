@@ -73,6 +73,7 @@ describe("some", () => {
         assert.equal(one, 1);
         assert.equal(two, 2);
     });
+    
     it("rejects as soon as the goal cannot be reached", async () => {
         try {
             await Promise.some([
