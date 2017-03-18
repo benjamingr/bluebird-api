@@ -2,6 +2,7 @@ function factory() {
     class Bluebird extends Promise {}
     Bluebird.TypeError = TypeError; // Bluebird.TypeError is used in tests
 
+    require('./promiseErrors/AggregateError')(Bluebird);
     require('./promiseFns/tap')(Bluebird);
     require('./promiseFns/props')(Bluebird);
     require('./promiseFns/spread')(Bluebird);
@@ -33,7 +34,8 @@ function factory() {
     require('./promiseFns/done')(Bluebird);
     require('./promiseFns/suppressUnhandledRejections')(Bluebird);
     require('./promiseFns/onPossiblyUnhandledRejection')(Bluebird);
-    require('./promiseErrors/AggregateError')(Bluebird);
+    require('./promiseFns/some')(Bluebird);
+    require('./promiseFns/any')(Bluebird);
     Bluebird.config = (obj) => {}; // no config
     Bluebird.longStackTraces = () => {}; // long stack traces by debugger and not bb
     Bluebird.hasLongStackTraces = () => false;
