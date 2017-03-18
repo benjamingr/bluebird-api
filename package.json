@@ -7,7 +7,8 @@
         "test": "tests"
     },
     "scripts": {
-        "test": "mocha tests"
+        "test": "mocha tests",
+        "test-debug": "mocha --debug-brk tests"
     },
     "repository": {
         "type": "git",
