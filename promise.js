@@ -33,9 +33,10 @@ function factory() {
     require('./promiseFns/done')(Bluebird);
     require('./promiseFns/suppressUnhandledRejections')(Bluebird);
     require('./promiseFns/onPossiblyUnhandledRejection')(Bluebird);
+    require('./promiseErrors/AggregateError')(Bluebird);
     Bluebird.config = (obj) => {}; // no config
     Bluebird.longStackTraces = () => {}; // long stack traces by debugger and not bb
-    Bluebird.hasLongStackTraces = () => false; 
+    Bluebird.hasLongStackTraces = () => false;
     return Bluebird;
 }
 const copy = factory();

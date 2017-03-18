@@ -1,5 +1,4 @@
 // promises/a+ suite.
-// run with node/tests/aplus.js - not a mocha file
 const promisesAplusTests = require("promises-aplus-tests");
 const Promise = require("../promise.js");
 
