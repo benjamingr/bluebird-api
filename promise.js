@@ -30,6 +30,7 @@ function factory() {
     require('./promiseFns/asCallback')(Bluebird);
     require('./promiseFns/noConflict')(Bluebird);
     require('./promiseFns/defer')(Bluebird);
+    require('./promiseFns/done')(Bluebird);
     return Bluebird;
 }
 const copy = factory();
