@@ -11,10 +11,10 @@ module.exports = (Bluebird) => {
             };
         } catch (e) {
             return {
-                value() { throw new Error(); },
+                value() { throw new Error("Tried to get value of rejected promise"); },
                 reason() { return e; }, 
-                isFulfilled() { return true; },
-                isRejected() { return false; }
+                isFulfilled() { return false; },
+                isRejected() { return true; }
             };
         }
     }
