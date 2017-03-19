@@ -43,6 +43,14 @@ function testRejected(reason, test) {
 }
 
 describe("thenReturn", function () {
+    it("forwards errors", () => {
+        return Promise.reject(10)
+            .thenReturn(100)
+            .then(assert.fail, assert.ok);
+    });
+});
+
+describe("thenReturn", function () {
 
     describe("primitives", function() {
         specify("null", wrap(returnValue, null));
