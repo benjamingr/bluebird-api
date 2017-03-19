@@ -1,5 +1,6 @@
 const escapePromiseCatch = require("./utils/nextTick.js");
 module.exports = (Bluebird) => {
+    Bluebird.prototype.nodeify = // back compat alias
     Bluebird.prototype.asCallback = function asCallback(cb, opts) {
         const spread = opts && opts.spread;
         this.catch(() => {}); // opt out of unhandledRejection detection

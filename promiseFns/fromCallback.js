@@ -1,4 +1,5 @@
 module.exports = (Bluebird) => {
+    Bluebird.fromNode = // back compat alias
     Bluebird.fromCallback = function fromCallback(fn, { context = null, multiArgs = false } = {}) {
         return new Bluebird((resolve, reject) => {
             const resolver = multiArgs ?
