@@ -14,6 +14,7 @@ function factory() {
     require('./promiseFns/each')(Bluebird);
     require('./promiseFns/mapSeries')(Bluebird);
     require('./promiseFns/map')(Bluebird);
+    require('./promiseFns/filter')(Bluebird);
     require('./promiseFns/get')(Bluebird);
     require('./promiseFns/call')(Bluebird);
     require('./promiseFns/reflect')(Bluebird);
@@ -43,6 +44,8 @@ function factory() {
     Bluebird.config = (obj) => {}; // no config
     Bluebird.longStackTraces = () => {}; // long stack traces by debugger and not bb
     Bluebird.hasLongStackTraces = () => false;
+    Bluebird.prototype.all = async function all() { return await Promise.all(await this) };
+    
     return Bluebird;
 }
 const copy = factory();

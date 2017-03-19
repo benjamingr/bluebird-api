@@ -1,14 +1,15 @@
 const util = require("./util");
 module.exports = (Bluebird) => {
     Bluebird.filter = (x, predicate, opts) => Bluebird.resolve(x).filter(predicate, opts);
-
     Bluebird.prototype.filter = async function(predicate, {concurrency} = {}) {
-        const values = await Promise.all(await this);
-        if(!concurrency) {
-            return await Promise.all(values.filter(predicate));
+        const values = await this.all();
+        const predicateResults = await this.map(predicate, {concurrency});
+        const output = [];
+        for(let i = 0; i < predicateResults.length; i++) {
+            if(!predicateResults[i]) continue;
+            output.push(values[i]);
         }
-        const throttled = util.throttle(predicate, Number(concurrency));
-        return await Promise.all(values.filter(throttled));
+        return output;
     };
 };
 
