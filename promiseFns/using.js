@@ -2,14 +2,19 @@ const unsafe = require("./utils/nextTick.js");
 
 module.exports = (Bluebird) => {
     Bluebird.using = function(...disposersAndFn) {
-        let fn;
-        const results = Array(disposersAndFn.length);
+        let fn, error;
+        const results = Array(disposersAndFn.length - 1);
         return new Bluebird((resolve, reject) => {
+
             fn = disposersAndFn.pop();
             if(typeof fn !== "function") {
                 throw new TypeError("Non function passed to using");
             }
             let remaining = disposersAndFn.length;
+            const rejectCount = () => {
+                remaining--;
+                if(remaining === 0) reject(error);
+            }
             let failed = false;
             for(let i = 0; i < disposersAndFn.length; i++) {
                 const disposer = disposersAndFn[i];
@@ -22,14 +27,19 @@ module.exports = (Bluebird) => {
                             if(!item.disposer) continue;
                             await item.disposer._cleanup();
                         }
-                        reject(e); // reject with the error
+                        error = e;
+                        rejectCount(); // reject with the error
                     });
                 };
                 if(disposer._use) { 
-                    disposer._use.then(resource => {    
+                    disposer._use.then(resource => {
                         if(failed) {
                             //todo: hold reject until these finish?
-                            unsafe(() => disposer._cleanup());   
+                            unsafe(async () => {
+                                await disposer._cleanup(); 
+                                rejectCount();
+                            });
+                            return;
                         }
                         results[i] = {resource, disposer};
                         if(--remaining === 0) {
