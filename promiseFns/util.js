@@ -1,6 +1,8 @@
 module.exports = {
     throttle,
-    isPromise
+    isPromise,
+    isObject,
+    classString
 };
 
 
@@ -36,4 +38,13 @@ function throttle(fn, concurrency = 20) {
 
 function isPromise(obj) {
     return obj && obj.then && (typeof(obj.then) === 'function');
+}
+
+function isObject(value) {
+    return typeof value === "function" ||
+           typeof value === "object" && value !== null;
+}
+
+function classString(obj) {
+    return {}.toString.call(obj);
 }
