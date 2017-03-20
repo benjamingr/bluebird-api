@@ -5,16 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Test Debug",
+            "name": "Debug current test file",
             "type": "node",
             "request": "launch",
             "cwd": "${workspaceRoot}",
-            "runtimeExecutable": "npm",
-            "windows": {
-                "runtimeExecutable": "npm.cmd"
-            },
+            "runtimeExecutable": "mocha",
             "runtimeArgs": [
-                "run-script", "test-debug"
+                "--debug-brk", "${file}"
             ],
             "port": 5858
         }

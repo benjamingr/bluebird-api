@@ -3,8 +3,6 @@ module.exports = {
     isPromise
 };
 
-
-
 // slow implementation to start with. Should be "fast enough" for small concurrency values < 100;
 function throttle(fn, concurrency = 20) {
     const workers = Array(concurrency).fill(Promise.resolve());

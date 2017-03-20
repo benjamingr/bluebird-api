@@ -1118,7 +1118,7 @@ var canEvaluate = (function() {
 var canTestArity = (function(a, b, c) {}).length === 3 && canEvaluate;
 
 if (canTestArity) {
-    describe("arity", function() {
+    describe.skip("arity", function() {
         specify("should be original - 1", function() {
             var fn = function(a, b, c, callback) {};
             assert.equal(Promise.promisify(fn).length, 3);
