@@ -191,7 +191,6 @@ describe("when calling promisified function it should ", function(){
         });
     });
 
-/* Excluded - out of scope
     specify("double promisification returns same function back", function() {
         var c = function(){};
         var a = Promise.promisify(function(){});
@@ -199,7 +198,6 @@ describe("when calling promisified function it should ", function(){
         assert.notEqual(c, a);
         assert.strictEqual(a, b);
     });
-*/
 
     specify("call future attached handlers later", function() {
         var a = error(1,2,3).then(0, testUtils.noop);
@@ -350,7 +348,6 @@ describe("promisify on objects", function(){
     Promise.promisifyAll(objf);
     Promise.promisifyAll(Test.prototype);
 
-/* Excluded - out of scope
     specify("should not repromisify", function() {
         var f = o.f;
         var fAsync = o.fAsync;
@@ -361,9 +358,7 @@ describe("promisify on objects", function(){
         assert.deepEqual(getOwnPropertyNames, Object.getOwnPropertyNames(o));
         assert.equal(ret, o);
     });
-*/
 
-/* Excluded - out of scope
     specify("should not repromisify function object", function() {
         var f = objf.f;
         var fAsync = objf.fAsync;
@@ -374,7 +369,6 @@ describe("promisify on objects", function(){
         assert.deepEqual(getOwnPropertyNames, Object.getOwnPropertyNames(objf));
         assert.equal(ret, objf);
     });
-*/
 
     specify("should work on function objects too", function() {
         objf.fAsync(1, 2, 3, 4, 5, 6, 7).then(function(result){
@@ -998,13 +992,13 @@ describe("OperationalError wrapping", function() {
     errthrow = Promise.promisify(errthrow);
     typethrow = Promise.promisify(typethrow);
 
-    specify("should wrap stringback", function() {
+    specify.skip("should wrap stringback", function() {
         return stringback().error(function(e) {
             assert(e instanceof OperationalError);
         });
     });
 
-    specify("should wrap errback", function() {
+    specify.skip("should wrap errback", function() {
         return errback().error(function(e) {
             assert(e instanceof OperationalError);
         });
@@ -1015,7 +1009,7 @@ describe("OperationalError wrapping", function() {
             });
     });
 
-    specify("should not wrap stringthrow", function() {
+    specify.skip("should not wrap stringthrow", function() {
         return stringthrow().error(assert.fail).then(assert.fail, function(e){
             assert(e instanceof Error);
         });

@@ -1,3 +1,5 @@
+"use strict";
+
 const util = require('./util');
 // indicates to use the context of the promisified function (it's true `this`)
 // like bluebird's `var THIS = {};`
@@ -5,6 +7,16 @@ const USE_THIS = Symbol("USE_THIS");
 const IS_PROMISIFIED = Symbol("IS_PROMISIFIED");
 const IDENTIFIER_REGEX = /^[a-z$_][a-z$_0-9]*$/i;
 const THIS_ASSIGNMENT_PATTERN = /this\s*\.\s*\S+\s*=/;
+const NO_COPY_PROPS = [
+    'arity', // From BB.Firefox 4
+    'length',
+    'name',
+    'arguments',
+    'caller',
+    'callee',
+    'prototype',
+    IS_PROMISIFIED
+];
 
 const FORBIDDEN_PROTOTYPES = [
     Array.prototype,
@@ -14,6 +26,8 @@ const FORBIDDEN_PROTOTYPES = [
 
 module.exports = (Bluebird) => {
     Bluebird.promisify = function promisify(fn, { context = USE_THIS, multiArgs = false } = {}) {
+        if (fn[IS_PROMISIFIED]) return fn;
+
         return promisifyFunction({ fn, context, multiArgs });
     };
 
@@ -37,7 +51,7 @@ module.exports = (Bluebird) => {
     };
 
     function internalPromisifyAll(obj, suffix, filter, promisifier, multiArgs) {
-        const functionKeys = getFunctionsToPromisify(obj, suffix);
+        const functionKeys = getFunctionsToPromisify(obj, suffix, filter);
 
         for (const key of functionKeys) {
             let promisified;
@@ -53,6 +67,8 @@ module.exports = (Bluebird) => {
 
             obj[`${key}${suffix}`] = promisified;
         }
+
+        return obj;
     }
 
     // roughly equivalent to BB's makeNodePromisified()
@@ -64,7 +80,7 @@ module.exports = (Bluebird) => {
             }
 
             // dynamic lookup
-            if (dynamicLookupKey) {
+            if (context && dynamicLookupKey) {
                 fn = context[dynamicLookupKey];
             }
 
@@ -75,6 +91,7 @@ module.exports = (Bluebird) => {
             });
         }
 
+        copyFunctionProps(fn, promisifiedFunction);
         Object.defineProperty(promisifiedFunction, IS_PROMISIFIED, { enumerable: false, value: true });
 
         return promisifiedFunction;
@@ -192,3 +209,10 @@ function isClass(fn) {
     }
 }
 
+// Used when promisifying a function
+function copyFunctionProps(from, to) {
+    Object.getOwnPropertyNames(from)
+        .filter(key => !NO_COPY_PROPS.includes(key))
+        .map(key => ([ key, Object.getOwnPropertyDescriptor(from, key) ]))
+        .forEach(([ key, propertyDescriptor ]) => Object.defineProperty(to, key, propertyDescriptor));
+}
