@@ -1,7 +1,6 @@
 function factory() {
     class Bluebird extends Promise {}
     Bluebird.TypeError = TypeError; // Bluebird.TypeError is used in tests
-
     require('./promiseErrors/OperationalError')(Bluebird);
     require('./promiseErrors/AggregateError')(Bluebird);
     require('./promiseFns/tap')(Bluebird);
@@ -30,7 +29,6 @@ function factory() {
     require('./promiseFns/coroutine')(Bluebird);
     require('./promiseFns/cast')(Bluebird);
     require('./promiseFns/fromCallback')(Bluebird);
-    require('./promiseFns/setScheduler')(Bluebird);
     require('./promiseFns/asCallback')(Bluebird);
     require('./promiseFns/noConflict')(Bluebird);
     require('./promiseFns/defer')(Bluebird);
@@ -41,7 +39,18 @@ function factory() {
     require('./promiseFns/any')(Bluebird);
     require('./promiseFns/disposer')(Bluebird);
     require('./promiseFns/using')(Bluebird);
-    Bluebird.config = (obj) => {}; // no config
+
+    const logger = {log: console.warn, active: true};
+    //const warningThen = require("./promiseFns/then")(Bluebird, logger);
+    
+    require('./promiseFns/setScheduler')(Bluebird);
+    Bluebird.config = (obj) => {
+        // if(!obj.warnings) {
+        //     logger.active = false;
+        // } else {
+        //     logger.active = true;
+        // }
+    };
     Bluebird.longStackTraces = () => {}; // long stack traces by debugger and not bb
     Bluebird.hasLongStackTraces = () => false;
     Bluebird.prototype.all = async function all() { return await Promise.all(await this) };
