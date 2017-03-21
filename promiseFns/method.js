@@ -1,6 +1,6 @@
 module.exports = (Bluebird) => {
 
-    Promise.method = function(fn) {
+    Bluebird.method = function(fn) {
         if(typeof fn !== "function") {
             throw new TypeError("Non function passed to .method");
         }
