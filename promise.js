@@ -33,7 +33,6 @@ function factory() {
     require('./promiseFns/error')(Bluebird);
     require('./promiseFns/coroutine')(Bluebird);
     require('./promiseFns/cast')(Bluebird);
-    require('./promiseFns/fromCallback')(Bluebird);
     require('./promiseFns/asCallback')(Bluebird);
     require('./promiseFns/noConflict')(Bluebird);
     require('./promiseFns/defer')(Bluebird);

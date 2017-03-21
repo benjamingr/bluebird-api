@@ -992,13 +992,13 @@ describe("OperationalError wrapping", function() {
     errthrow = Promise.promisify(errthrow);
     typethrow = Promise.promisify(typethrow);
 
-    specify.skip("should wrap stringback", function() {
+    specify("should wrap stringback", function() {
         return stringback().error(function(e) {
             assert(e instanceof OperationalError);
         });
     });
 
-    specify.skip("should wrap errback", function() {
+    specify("should wrap errback", function() {
         return errback().error(function(e) {
             assert(e instanceof OperationalError);
         });
@@ -1009,7 +1009,7 @@ describe("OperationalError wrapping", function() {
             });
     });
 
-    specify.skip("should not wrap stringthrow", function() {
+    specify("should not wrap stringthrow", function() {
         return stringthrow().error(assert.fail).then(assert.fail, function(e){
             assert(e instanceof Error);
         });

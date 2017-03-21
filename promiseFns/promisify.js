@@ -50,9 +50,20 @@ module.exports = (Bluebird) => {
         return internalPromisifyAll(obj, suffix, filter, promisifier, multiArgs);
     };
 
-    function internalPromisifyAll(obj, suffix, filter, promisifier, multiArgs) {
-        const functionKeys = getFunctionsToPromisify(obj, suffix, filter);
+    Bluebird.fromNode = // back compat alias
+    Bluebird.fromCallback = function fromCallback(fn, { context = null, multiArgs = false } = {}) {
+        return new Bluebird((resolve, reject) => {
+            let resolver = createResolver({ resolve, reject, multiArgs });
 
+            return fn.apply(context, [resolver]);
+        });
+    };
+
+    function internalPromisifyAll(obj, suffix, filter, promisifier, multiArgs) {
+        // 1. determine what to promisify.
+        const functionKeys = inheritedDataKeys(obj).filter(key => shouldPromisify(key, suffix, obj, filter))
+
+        // 2. Doooo it!
         for (const key of functionKeys) {
             let promisified;
 
@@ -87,7 +98,12 @@ module.exports = (Bluebird) => {
             return new Bluebird((resolve, reject) => {
                 let resolver = createResolver({ resolve, reject, multiArgs });
 
-                return fn.apply(context, [...args, resolver]);
+                try {
+                    return fn.apply(context, [...args, resolver]);
+                }
+                catch (err) {
+                    reject(ensureIsError(err));
+                }
             });
         }
 
@@ -97,17 +113,26 @@ module.exports = (Bluebird) => {
         return promisifiedFunction;
     }
 
+    // Generate the function given to a node-style async function as the callback.
     function createResolver({ resolve, reject, multiArgs }) {
-        if (multiArgs) {
-            return (err, ...values) => err ? reject(err) : resolve(Bluebird.all(values));
-        }
-        
-        return (err, value) => err ? reject(err) : resolve(value);
-    }
+        return (err, ...values) => {
+            if (err) {
+                err = ensureIsError(err); // if it's primitive, make in an Error
+                
+                if (err instanceof Error && Object.getPrototypeOf(err) === Error.prototype) {
+                    // if it's a base Error (not a custom error), make it an OperationalError
+                    err = Bluebird.OperationalError.fromError(ensureIsError(err));
+                }
 
-    
-    function getFunctionsToPromisify(obj, suffix, filter) {
-        return inheritedDataKeys(obj).filter(key => shouldPromisify(key, suffix, obj, filter))
+                reject(err);
+            }
+            else if (multiArgs) {
+                resolve(Bluebird.all(values))
+            }
+            else {
+                resolve(values[0]);
+            }
+        }
     }
 };
 
@@ -215,4 +240,23 @@ function copyFunctionProps(from, to) {
         .filter(key => !NO_COPY_PROPS.includes(key))
         .map(key => ([ key, Object.getOwnPropertyDescriptor(from, key) ]))
         .forEach(([ key, propertyDescriptor ]) => Object.defineProperty(to, key, propertyDescriptor));
+}
+
+function isPrimitive(val) {
+    return val == null || val === true || val === false ||
+        typeof val === "string" || typeof val === "number";
+}
+
+function ensureIsError(err) {
+    if (!isPrimitive(err)) return err;
+
+    let message;
+
+    try {
+        message = err + "";
+    } catch (e) {
+        message = "[no string representation]";
+    }
+
+    return new Error(message);
 }
