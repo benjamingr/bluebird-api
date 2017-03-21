@@ -1,8 +1,13 @@
 function factory() {
     class Bluebird extends Promise { }
     Bluebird.TypeError = TypeError; // Bluebird.TypeError is used in tests
+
     require('./promiseErrors/OperationalError')(Bluebird);
     require('./promiseErrors/AggregateError')(Bluebird);
+    require('./promiseErrors/TimeoutError')(Bluebird);
+
+    require('./promiseFns/delay')(Bluebird);
+    require('./promiseFns/timeout')(Bluebird);
     require('./promiseFns/tap')(Bluebird);
     require('./promiseFns/props')(Bluebird);
     require('./promiseFns/spread')(Bluebird);

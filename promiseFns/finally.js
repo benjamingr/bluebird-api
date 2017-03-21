@@ -1,5 +1,5 @@
 module.exports = (Bluebird) => {
-    Bluebird.prototype.finally = function(onResolved) { 
+    Bluebird.prototype.finally = Bluebird.prototype.lastly = function(onResolved) { 
         return Bluebird.resolve((async () => {
             try {
                 var res = await this;
