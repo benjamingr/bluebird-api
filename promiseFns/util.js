@@ -37,3 +37,13 @@ function throttle(fn, concurrency = 20) {
 function isPromise(obj) {
     return obj && obj.then && (typeof(obj.then) === 'function');
 }
+
+
+function classString(obj) {
+    return {}.toString.call(obj);
+}
+
+function isObject(value) {
+    return typeof value === "function" ||
+           typeof value === "object" && value !== null;
+}
