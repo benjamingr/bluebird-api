@@ -11,7 +11,7 @@ module.exports = (Bluebird) => {
     // modified
     const originalThen = Symbol();
     Bluebird.prototype[originalThen] = Bluebird.prototype.then; 
-    Bluebird.setScheduler = function(scheduler) {
+        Bluebird.setScheduler = function(scheduler) {
         if(typeof scheduler !== "function") {
             throw new TypeError("Passed non function to setScheduler");
         }

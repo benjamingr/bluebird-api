@@ -7,6 +7,7 @@ module.exports = (Bluebird) => {
                 reason() { throw new Error(); }, 
                 value() { return val; }, 
                 isFulfilled() { return true; },
+                isCancelled() { return false; }, // back compat
                 isRejected() { return false; }
             };
         } catch (e) {
@@ -15,6 +16,7 @@ module.exports = (Bluebird) => {
                 value() { throw new Error("Tried to get the value of a rejected promise"); },
                 reason() { return e; }, 
                 isFulfilled() { return false; },
+                isCancelled() { return false; }, // back compat
                 isRejected() { return true; }
             };
         }

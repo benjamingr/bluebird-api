@@ -2,7 +2,7 @@
   "name": "bluebird-api",
   "version": "1.0.0",
   "description": "Bluebird compatible API for native promise subclass",
-  "main": "index.js",
+  "main": "promise.js",
   "directories": {
     "test": "tests"
   },

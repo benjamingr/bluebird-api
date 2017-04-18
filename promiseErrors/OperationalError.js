@@ -6,6 +6,12 @@ module.exports = function (Bluebird) {
         get isOperational() {
             return true;
         }
+
+        static fromError(err) {
+            return Object.assign(new OperationalError(err.message), {
+                stack: err.stack
+            });
+        }
     };
     Bluebird.OperationalError = OperationalError;
 };
