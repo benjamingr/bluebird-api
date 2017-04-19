@@ -43,10 +43,11 @@ function factory() {
     require('./promiseFns/any')(Bluebird);
     require('./promiseFns/disposer')(Bluebird);
     require('./promiseFns/using')(Bluebird);
+    require('./promiseFns/tapCatch')(Bluebird);
 
     const logger = {log: console.warn, active: true};
     //const warningThen = require("./promiseFns/then")(Bluebird, logger);
-    
+
     require('./promiseFns/setScheduler')(Bluebird);
     Bluebird.config = (obj) => {
         // if(!obj.warnings) {
@@ -62,7 +63,7 @@ function factory() {
     Bluebird.prototype.all = function all() {
         return this.then(r => Bluebird.all(r));
     };
-    
+
     return Bluebird;
 }
 const copy = factory();

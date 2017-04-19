@@ -1,6 +1,8 @@
 module.exports = {
     throttle,
-    isPromise
+    isPromise,
+    isObject,
+    classString
 };
 
 // slow implementation to start with. Should be "fast enough" for small concurrency values < 100;
@@ -34,4 +36,14 @@ function throttle(fn, concurrency = 20) {
 
 function isPromise(obj) {
     return obj && obj.then && (typeof(obj.then) === 'function');
+}
+
+
+function classString(obj) {
+    return {}.toString.call(obj);
+}
+
+function isObject(value) {
+    return typeof value === "function" ||
+           typeof value === "object" && value !== null;
 }
