@@ -34,7 +34,7 @@ http://bluebirdjs.com/docs/api-reference.html
 ### Core
 
 #### [Promise.then](http://bluebirdjs.com/docs/api/then.html)
-```
+```js
 .then(
     [function(any value) fulfilledHandler],
     [function(any error) rejectedHandler]
@@ -49,7 +49,7 @@ http://bluebirdjs.com/docs/api-reference.html
 
 #### [Promise.error](http://bluebirdjs.com/docs/api/error.html)
 
-```
+```js
 .error([function(any error) rejectedHandler]) -> Promise
 ```
 
@@ -66,7 +66,7 @@ Like calling .then, but the fulfillment value must be an array, which is flatten
 
 #### [Promise.finally](http://bluebirdjs.com/docs/api/finally.html)
 
-```
+```js
 .finally(function() handler) -> Promise
 .lastly(function() handler) -> Promise
 ```
@@ -94,13 +94,13 @@ Promise.method(function(...arguments) fn) -> function
 
 #### [Promise.suppressUnhandledRejections](http://bluebirdjs.com/docs/api/suppressunhandledrejections.html)
 
-```
+```js
 .suppressUnhandledRejections() -> undefined
 
 ```
 
 Basically sugar for doing:
-```
+```js
 somePromise.catch(function(){});
 ```
 
@@ -109,7 +109,7 @@ Which is needed in case error handlers are attached asynchronously to the promis
 
 #### [Promise.onPossiblyUnhandledRejection](http://bluebirdjs.com/docs/api/promise.onpossiblyunhandledrejection.html)
 
-```
+```js
 Promise.onPossiblyUnhandledRejection(function(any error, Promise promise) handler) -> undefined
 ```
 
@@ -117,7 +117,7 @@ Promise.onPossiblyUnhandledRejection(function(any error, Promise promise) handle
 
 Add `handler` as the handler to call when there is a possibly unhandled rejection. The default handler logs the error stack to stderr or `console.error` in browsers.
 
-```
+```js
 Promise.onPossiblyUnhandledRejection(function(e, promise) {
     throw e;
 });
@@ -152,13 +152,13 @@ Promise.promisify(
 ```
 
 #### [Promise.asCallback](http://bluebirdjs.com/docs/api/ascallback.html)
-```
+```js
 .asCallback(
     [function(any error, any value) callback],
     [Object {spread: boolean=false} options]
 ) -> this
 ```
-```
+```js
 .nodeify(
     [function(any error, any value) callback],
     [Object {spread: boolean=false} options]
@@ -201,7 +201,7 @@ Given an ``Iterable``(arrays are ``Iterable``), or a promise of an ``Iterable``,
 
 ### [.reduce](http://bluebirdjs.com/docs/api/promise.reduce.html)
 
-```
+```js
 Promise.reduce(
     Iterable<any>|Promise<Iterable<any>> input,
     function(any accumulator, any item, int index, int length) reducer,
@@ -215,7 +215,7 @@ If the reducer function returns a promise, then the result of the promise is ***
 
 
 ### [.some](http://bluebirdjs.com/docs/api/promise.some.html)
-```
+```js
 Promise.some(
     Iterable<any>|Promise<Iterable<any>> input,
     int count
@@ -226,7 +226,7 @@ Given an `Iterable`(arrays are `Iterable`), or a promise of an `Iterable`, which
 
 #### [.any](http://bluebirdjs.com/docs/api/promise.any.html)
 
-```
+```js
 Promise.any(Iterable<any>|Promise<Iterable<any>> input) -> Promise
 ```
 
@@ -258,7 +258,7 @@ The ``.reflect`` method returns a promise that is always successful when this pr
 
 
 #### [.noConflict](http://bluebirdjs.com/docs/api/promise.noconflict.html)
-```
+```js
 Promise.noConflict() -> Object
 ```
 This is relevant to browser environments with no module loader.
@@ -271,14 +271,14 @@ The `.reflect` method returns a promise that is always successful when this prom
 
 #### [.return](http://bluebirdjs.com/docs/api/return.html)
 
-```
+```js
 .return(any value) -> Promise
 .thenReturn(any value) -> Promise
 
 ```
 
 #### Convenience method for:
-```
+```js
 .then(function() {
    return value;
 });
@@ -287,14 +287,14 @@ in the case where value ***doesn't change its value*** because its binding time 
 
 
 #### [.throw](http://bluebirdjs.com/docs/api/throw.html)
-```
+```js
 .throw(any reason) -> Promise
 .thenThrow(any reason) -> Promise
 ```
 
 #### Convenience method for:
 
-```
+```js
 .then(function() {
    throw reason;
 });
@@ -307,7 +307,7 @@ For compatibility with earlier ECMAScript version, an alias `.thenThrow` is prov
 
 #### [.catchReturn](http://bluebirdjs.com/docs/api/catchreturn.html)
 
-```
+```js
 .catchReturn(
     [class ErrorClass|function(any error) predicate],
     any value
@@ -316,7 +316,7 @@ For compatibility with earlier ECMAScript version, an alias `.thenThrow` is prov
 
 #### Convenience method for:
 
-```
+```js
 .catch(function() {
    return value;
 });
@@ -328,7 +328,7 @@ Same limitations regarding to the binding time of `value` to apply as with `.ret
 
 #### [.catchThrow](http://bluebirdjs.com/docs/api/catchthrow.html)
 
-```
+```js
 .catchThrow(
     [class ErrorClass|function(any error) predicate],
     any reason
@@ -337,7 +337,7 @@ Same limitations regarding to the binding time of `value` to apply as with `.ret
 
 #### Convenience method for:
 
-```
+```js
 .catch(function() {
    throw reason;
 });
@@ -355,7 +355,7 @@ Same limitations regarding to the binding time of `reason` to apply as with `.re
 
 #### [.coroutine](http://bluebirdjs.com/docs/api/promise.coroutine.html)
 
-```
+```js
 
 Promise.coroutine(GeneratorFunction(...arguments) generatorFunction, Object options) -> function
 ```
@@ -372,7 +372,7 @@ This API is deprecated both in bluebird and bluebird-api, and exist in bluebird-
 
 Deferreds are deprecated in favor of the promise constructor. If you need deferreds for some reason, you can create them trivially using the constructor:
 
-```
+```js
 function defer() {
     var resolve, reject;
     var promise = new Promise(function() {
@@ -393,7 +393,7 @@ function defer() {
 ### Configuration
 
 #### [.done](http://bluebirdjs.com/docs/api/done.html)
-```
+```js
 .done(
     [function(any value) fulfilledHandler],
     [function(any error) rejectedHandler]
@@ -411,7 +411,7 @@ Like `.then`, but any unhandled rejection that ends up here will crash the proce
 
 #### [.using](http://bluebirdjs.com/docs/api/promise.using.html)
 
-```
+```js
 Promise.using(
     Promise|Disposer|any resource,
     Promise|Disposer|any resource...,
@@ -419,7 +419,7 @@ Promise.using(
 ) -> Promise
 ```
 
-```
+```js
 Promise.using(
     Array<Promise|Disposer|Any> resources,
     function(Array<any> resources) handler
@@ -432,7 +432,7 @@ In conjunction with `.disposer`, `using` will make sure that no matter what, the
 
 
 #### [.disposer](http://bluebirdjs.com/docs/api/disposer.html)
-```
+```js
 .disposer(function(any resource, Promise usingOutcomePromise) disposer) -> Disposer
 ```
 A meta method used to specify the disposer method that cleans up a resource when using `Promise.using`.
