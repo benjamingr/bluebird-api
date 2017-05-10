@@ -1,6 +1,6 @@
 {
   "name": "bluebird-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bluebird compatible API for native promise subclass",
   "main": "promise.js",
   "directories": {
