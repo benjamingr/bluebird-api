@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -343,41 +343,10 @@ module.exports = function (Bluebird) {
 } else {
     module.exports = setTimeout;
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(8).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(7).setImmediate))
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
-
-module.exports = (Bluebird) => {
-    Bluebird.prototype.reflect = async function() {
-        try {
-            const val = await this;
-            return {
-                isPending() { return false },
-                reason() { throw new Error(); }, 
-                value() { return val; }, 
-                isFulfilled() { return true; },
-                isCancelled() { return false; }, // back compat
-                isRejected() { return false; }
-            };
-        } catch (e) {
-            return {
-                isPending() { return false },
-                value() { throw new Error("Tried to get the value of a rejected promise"); },
-                reason() { return e; }, 
-                isFulfilled() { return false; },
-                isCancelled() { return false; }, // back compat
-                isRejected() { return true; }
-            };
-        }
-    };
-    // backwards compat Bluebird 2 method that works in Bluebird 3
-    Bluebird.prototype.settle = arr => arr.map(Bluebird.resolve).map(x => x.reflect());
-};
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 function factory() {
@@ -385,45 +354,44 @@ function factory() {
     Bluebird.TypeError = TypeError; // Bluebird.TypeError is used in tests
 
     __webpack_require__(2)(Bluebird);
+    __webpack_require__(9)(Bluebird);
     __webpack_require__(10)(Bluebird);
-    __webpack_require__(11)(Bluebird);
 
-    __webpack_require__(21)(Bluebird);
+    __webpack_require__(20)(Bluebird);
     __webpack_require__(46)(Bluebird);
     __webpack_require__(43)(Bluebird);
-    __webpack_require__(36)(Bluebird);
-    __webpack_require__(41)(Bluebird);
     __webpack_require__(35)(Bluebird);
-    __webpack_require__(29)(Bluebird);
-    __webpack_require__(47)(Bluebird);
-    __webpack_require__(32)(Bluebird);
-    __webpack_require__(24)(Bluebird);
-    __webpack_require__(31)(Bluebird);
-    __webpack_require__(30)(Bluebird);
-    __webpack_require__(26)(Bluebird);
-    __webpack_require__(28)(Bluebird);
-    __webpack_require__(14)(Bluebird);
-    __webpack_require__(4)(Bluebird);
-    __webpack_require__(27)(Bluebird);
-    __webpack_require__(38)(Bluebird);
-    __webpack_require__(37)(Bluebird);
-    __webpack_require__(45)(Bluebird);
-    __webpack_require__(17)(Bluebird);
-    __webpack_require__(18)(Bluebird);
-    __webpack_require__(4)(Bluebird);
-    __webpack_require__(16)(Bluebird);
-    __webpack_require__(25)(Bluebird);
-    __webpack_require__(19)(Bluebird);
-    __webpack_require__(15)(Bluebird);
-    __webpack_require__(13)(Bluebird);
-    __webpack_require__(33)(Bluebird);
-    __webpack_require__(20)(Bluebird);
-    __webpack_require__(23)(Bluebird);
-    __webpack_require__(42)(Bluebird);
+    __webpack_require__(41)(Bluebird);
     __webpack_require__(34)(Bluebird);
-    __webpack_require__(40)(Bluebird);
+    __webpack_require__(28)(Bluebird);
+    __webpack_require__(47)(Bluebird);
+    __webpack_require__(31)(Bluebird);
+    __webpack_require__(23)(Bluebird);
+    __webpack_require__(30)(Bluebird);
+    __webpack_require__(29)(Bluebird);
+    __webpack_require__(25)(Bluebird);
+    __webpack_require__(27)(Bluebird);
+    __webpack_require__(13)(Bluebird);
+    __webpack_require__(37)(Bluebird);
+    __webpack_require__(26)(Bluebird);
+    __webpack_require__(38)(Bluebird);
+    __webpack_require__(36)(Bluebird);
+    __webpack_require__(45)(Bluebird);
+    __webpack_require__(16)(Bluebird);
+    __webpack_require__(17)(Bluebird);
+    __webpack_require__(15)(Bluebird);
+    __webpack_require__(24)(Bluebird);
+    __webpack_require__(18)(Bluebird);
+    __webpack_require__(14)(Bluebird);
     __webpack_require__(12)(Bluebird);
+    __webpack_require__(32)(Bluebird);
+    __webpack_require__(19)(Bluebird);
     __webpack_require__(22)(Bluebird);
+    __webpack_require__(42)(Bluebird);
+    __webpack_require__(33)(Bluebird);
+    __webpack_require__(40)(Bluebird);
+    __webpack_require__(11)(Bluebird);
+    __webpack_require__(21)(Bluebird);
     __webpack_require__(48)(Bluebird);
     __webpack_require__(44)(Bluebird);
 
@@ -458,12 +426,11 @@ copy.getNewLibraryCopy = () => {
 module.exports = copy;
 
 
-
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const Bluebird = __webpack_require__(5);
+const Bluebird = __webpack_require__(4);
 module.exports = Bluebird
 
 if (typeof window !== 'undefined') {
@@ -471,7 +438,7 @@ if (typeof window !== 'undefined') {
 }
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -661,10 +628,10 @@ if (typeof window !== 'undefined') {
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(1)))
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -717,13 +684,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(7);
+__webpack_require__(6);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports) {
 
 var g;
@@ -750,7 +717,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = function (Bluebird) {
@@ -773,7 +740,7 @@ module.exports = function (Bluebird) {
 };
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = function (Bluebird) {
@@ -789,7 +756,7 @@ module.exports = function (Bluebird) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -802,7 +769,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const escapePromiseCatch = __webpack_require__(3);
@@ -819,7 +786,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -839,7 +806,7 @@ module.exports = (Bluebird) => {
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -847,7 +814,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -907,7 +874,7 @@ function testFilter(filterArgument, error) {
 }
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -919,7 +886,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -931,7 +898,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const util = __webpack_require__(0);
@@ -1042,7 +1009,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1055,7 +1022,7 @@ module.exports = (Bluebird) => {
 
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1067,7 +1034,7 @@ module.exports = (Bluebird) => {
 
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1084,7 +1051,7 @@ module.exports = (Bluebird) => {
 
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const schedule = __webpack_require__(3);
@@ -1095,7 +1062,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1115,7 +1082,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1130,7 +1097,7 @@ module.exports = (Bluebird) => {
 
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const util = __webpack_require__(0);
@@ -1151,7 +1118,7 @@ module.exports = (Bluebird) => {
 
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1170,7 +1137,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports) {
 
 function indexedGetter(obj, index) {
@@ -1196,7 +1163,7 @@ module.exports = (Bluebird) => {
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1215,7 +1182,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const util = __webpack_require__(0);
@@ -1235,7 +1202,7 @@ module.exports = (Bluebird) => {
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1258,7 +1225,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1274,7 +1241,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1285,7 +1252,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 34 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {module.exports = (Bluebird) => {
@@ -1324,7 +1291,7 @@ module.exports = (Bluebird) => {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 35 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1593,7 +1560,7 @@ function ensureIsError(err) {
 
 
 /***/ }),
-/* 36 */
+/* 35 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1613,7 +1580,7 @@ module.exports = (Bluebird) => {
 };
 
 /***/ }),
-/* 37 */
+/* 36 */
 /***/ (function(module, exports) {
 
 module.exports = (Bluebird) => {
@@ -1641,6 +1608,37 @@ module.exports = (Bluebird) => {
     };
 
     Bluebird.reduce = (promise, reducer, initialValue) => Bluebird.resolve(promise).reduce(reducer, initialValue);
+};
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+module.exports = (Bluebird) => {
+    Bluebird.prototype.reflect = async function() {
+        try {
+            const val = await this;
+            return {
+                isPending() { return false },
+                reason() { throw new Error(); }, 
+                value() { return val; }, 
+                isFulfilled() { return true; },
+                isCancelled() { return false; }, // back compat
+                isRejected() { return false; }
+            };
+        } catch (e) {
+            return {
+                isPending() { return false },
+                value() { throw new Error("Tried to get the value of a rejected promise"); },
+                reason() { return e; }, 
+                isFulfilled() { return false; },
+                isCancelled() { return false; }, // back compat
+                isRejected() { return true; }
+            };
+        }
+    };
+    // backwards compat Bluebird 2 method that works in Bluebird 3
+    Bluebird.prototype.settle = arr => arr.map(Bluebird.resolve).map(x => x.reflect());
 };
 
 /***/ }),

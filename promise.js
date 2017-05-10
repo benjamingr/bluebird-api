@@ -28,7 +28,6 @@ function factory() {
     require('./promiseFns/throw')(Bluebird);
     require('./promiseFns/catchReturn')(Bluebird);
     require('./promiseFns/catchThrow')(Bluebird);
-    require('./promiseFns/reflect')(Bluebird);
     require('./promiseFns/catch')(Bluebird);
     require('./promiseFns/error')(Bluebird);
     require('./promiseFns/coroutine')(Bluebird);
@@ -74,4 +73,3 @@ copy.getNewLibraryCopy = () => {
 };
 
 module.exports = copy;
-
