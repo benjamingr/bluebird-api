@@ -59,7 +59,7 @@ Returns a promise that will be resolved with ms milliseconds.
 ```js
 .delay(int ms) -> Promise
 ```
-### [.timeout](http://bluebirdjs.com/docs/api/timeout.html)
+#### [.timeout](http://bluebirdjs.com/docs/api/timeout.html)
 Returns a promise that will be fulfilled with this promise's fulfillment value or rejection reason. However, if this promise is not fulfilled or rejected within ms milliseconds, the returned promise is rejected with a TimeoutError or the error as the reason.
 ```js
 .timeout(int ms, [String message="operation timed out"]) -> Promise
