@@ -10,9 +10,13 @@ describe("finally", () => {
     });
 
     it("runs on rejection", async () => {
-        let run = false;
-        await Promise.reject().finally(() => run = true);
+      let run = false;
+      try {
+        await Promise.reject(Error('test rejection')).finally(() => run = true);
+      }
+      catch (e) {
         assert(run);
+      }
     });
 
     it("doesn't change return vlaue", async () => {
@@ -26,7 +30,7 @@ describe("finally", () => {
     });
     it("overried rejections", async () => {
         let sync = true;
-        try { 
+        try {
             await Promise.reject(2).finally(() => { throw 3});
             assert.fail();
         } catch (e) {
