@@ -463,7 +463,12 @@ module.exports = copy;
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(5);
+const Bluebird = __webpack_require__(5);
+module.exports = Bluebird
+
+if (typeof window !== 'undefined') {
+    window.Bluebird = Bluebird;
+}
 
 /***/ }),
 /* 7 */
