@@ -23,6 +23,10 @@ const Promise = require('bluebird-api');
 4. ``npm install``
 5. ``npm test``
 
+Before committing changes run `npm run build`
+
+>  ***Commit build along with your changes to the repo.***
+
 ## Why
 There are [many reasons to use bluebird](http://bluebirdjs.com/docs/why-bluebird.html).
 As native Promise implementations improve, bluebird-api allows keeping the same code but enjoying the benefits of improved native Promises.
@@ -68,6 +72,7 @@ Like calling .then, but the fulfillment value must be an array, which is flatten
 
 ```js
 .finally(function() handler) -> Promise
+
 .lastly(function() handler) -> Promise
 ```
 
