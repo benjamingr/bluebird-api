@@ -41,3 +41,5 @@ jspm_packages
 
 # Mac OSX
 .DS_Store
+
+yarn.lock
