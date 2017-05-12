@@ -26,6 +26,10 @@ const FORBIDDEN_PROTOTYPES = [
 
 module.exports = (Bluebird) => {
     Bluebird.promisify = function promisify(fn, { context = USE_THIS, multiArgs = false } = {}) {
+        if(util.promisify && context === USE_THIS && !multiArgs) {
+            let promisified = util.promisify(fn);
+            return function(...args) { return Bluebird.resolve(promisified.call(this, ...args)); }
+        }
         if (fn[IS_PROMISIFIED]) return fn;
 
         return promisifyFunction({ fn, context, multiArgs });
