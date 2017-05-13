@@ -3,7 +3,7 @@ module.exports = (Bluebird) => {
     Bluebird.map = (x, mapper, opts) => Bluebird.resolve(x).map(mapper, opts);
 
     Bluebird.prototype.map = async function(mapper, {concurrency} = {}) {
-        const values = await Promise.all(await this);
+        const values = await Bluebird.all(await this);
         if(!concurrency) {
             return await Bluebird.all(values.map(mapper));
         }
