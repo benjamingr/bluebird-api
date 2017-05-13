@@ -7,7 +7,7 @@ module.exports = (Bluebird) => {
         if(!concurrency) {
             return await Bluebird.all(values.map(mapper));
         }
-        const throttled = util.throttle(mapper, Number(concurrency));
+        const throttled = util.throttle(mapper, Number(concurrency), Bluebird);
         return await Bluebird.all(values.map(throttled));
     };
 };
