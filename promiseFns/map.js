@@ -5,10 +5,10 @@ module.exports = (Bluebird) => {
     Bluebird.prototype.map = async function(mapper, {concurrency} = {}) {
         const values = await Promise.all(await this);
         if(!concurrency) {
-            return await Promise.all(values.map(mapper));
+            return await Bluebird.all(values.map(mapper));
         }
         const throttled = util.throttle(mapper, Number(concurrency));
-        return await Promise.all(values.map(throttled));
+        return await Bluebird.all(values.map(throttled));
     };
 };
 
