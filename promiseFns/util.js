@@ -6,7 +6,7 @@ module.exports = {
 };
 
 // slow implementation to start with. Should be "fast enough" for small concurrency values < 100;
-function throttle(fn, concurrency = 20) {
+function throttle(fn, concurrency = 20, Promise) {
     const workers = Array(concurrency).fill(Promise.resolve());
     const work = [];
     return function (...args) {
