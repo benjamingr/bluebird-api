@@ -22,5 +22,7 @@ module.exports = (Bluebird) => {
             return winner;
         })());
     }
-    Bluebird.timeout = (ms, rejectDesc, o) => Bluebird.resolve(o).delay(ms)
+    Bluebird.timeout = (ms, rejectDesc, o) => Bluebird.resolve((async () =>
+        Bluebird.resolve(o).delay(ms)
+    )());
 }

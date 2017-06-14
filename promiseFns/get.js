@@ -16,5 +16,7 @@ module.exports = (Bluebird) => {
         })());
     };
 
-    Bluebird.get = (promise, prop) => Bluebird.resolve(promise).get(prop);
+    Bluebird.get = (promise, prop) => Bluebird.resolve((async () =>
+        Bluebird.resolve(promise).get(prop)
+    )());
 };

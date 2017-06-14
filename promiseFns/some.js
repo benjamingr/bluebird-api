@@ -1,5 +1,8 @@
 module.exports = (Bluebird) => {
-    Bluebird.some = (prom, n) => Bluebird.resolve(prom).some(n);
+    Bluebird.some = (prom, n) => Bluebird.resolve((async () =>
+        Bluebird.resolve(prom).some(n)
+    )());
+
     Bluebird.prototype.some = function(n) {
         return Bluebird.resolve((async () => {
             let count = 0;

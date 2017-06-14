@@ -22,5 +22,7 @@ module.exports = (Bluebird) => {
       })());
     };
 
-    Bluebird.reduce = (promise, reducer, initialValue) => Bluebird.resolve(promise).reduce(reducer, initialValue);
+    Bluebird.reduce = (promise, reducer, initialValue) => Bluebird.resolve((async () =>
+      Bluebird.resolve(promise).reduce(reducer, initialValue)
+    )());
 };

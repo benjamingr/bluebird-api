@@ -1,6 +1,9 @@
 const util = require("./util");
 module.exports = (Bluebird) => {
-    Bluebird.filter = (x, predicate, opts) => Bluebird.resolve(x).filter(predicate, opts);
+    Bluebird.filter = (x, predicate, opts) => Bluebird.resolve((async () => 
+        Bluebird.resolve(x).filter(predicate, opts)
+    )());
+
     Bluebird.prototype.filter = async function(predicate, {concurrency} = {}) {
         const values = await this.all();
         const predicateResults = await this.map(predicate, {concurrency});

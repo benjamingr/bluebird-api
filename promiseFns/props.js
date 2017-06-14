@@ -11,5 +11,7 @@ module.exports = (Bluebird) => {
             return ret;
         })());
     };
-    Bluebird.props = o => Bluebird.resolve(o).props();
+    Bluebird.props = o => Bluebird.resolve((async () =>
+        Bluebird.resolve(o).props()
+    )());
 };

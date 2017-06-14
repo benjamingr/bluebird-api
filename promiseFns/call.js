@@ -10,5 +10,7 @@ module.exports = (Bluebird) => {
         })());
     };
     
-    Bluebird.call = (o, ...args) => Bluebird.resolve(o).call(...args);
+    Bluebird.call = (o, ...args) => Bluebird.resolve((async () =>
+        Bluebird.resolve(o).call(...args)
+    )());
 };

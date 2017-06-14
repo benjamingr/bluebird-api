@@ -14,5 +14,7 @@ module.exports = (Bluebird) => {
       })());
     };
 
-    Bluebird.mapSeries = (promise, iterator) => Bluebird.resolve(promise).mapSeries(iterator);
+    Bluebird.mapSeries = (promise, iterator) => Bluebird.resolve((async () =>
+      Bluebird.resolve(promise).mapSeries(iterator)
+    )());
 };
