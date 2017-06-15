@@ -29,6 +29,11 @@ describe("map", () => {
         });
         assert.deepEqual(arr, [2,3,4]);
     });
+
+    it('map should return bluebird promise', () => {
+        const arr = Promise.map([1,2,3], x => x)
+        assert.ok(arr instanceof Promise)
+    })
 });
 
 const specify = it;

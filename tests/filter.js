@@ -29,6 +29,11 @@ describe("filter", () => {
         });
         assert.deepEqual(arr, [2]);
     });
+
+    it('filter should return bluebird promise', () => {
+        const arr = Promise.filter([1,2,3], x => x)
+        assert.ok(arr instanceof Promise)
+    })
 });
 
 const specify = it;
