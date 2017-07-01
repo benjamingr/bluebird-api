@@ -64,4 +64,13 @@ describe("any", () => {
         ]);
         assert.ok(v instanceof Promise)
     })
+
+    it('prototype.any should not return bluebird promise', () => {
+        const v = Promise.prototype.any([
+            Promise.reject(0), 
+            Promise.reject(1),
+            Promise.resolve(2)
+        ]);
+        assert.equal(v instanceof Promise, false)
+    })
 });

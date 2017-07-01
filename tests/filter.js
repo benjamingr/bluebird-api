@@ -34,6 +34,11 @@ describe("filter", () => {
         const arr = Promise.filter([1,2,3], x => x)
         assert.ok(arr instanceof Promise)
     })
+
+    it('prototype.filter should not return bluebird promise', () => {
+        const arr = Promise.prototype.filter([1,2,3], x => x)
+        assert.equal(arr instanceof Promise, false)
+    })
 });
 
 const specify = it;
