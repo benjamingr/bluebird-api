@@ -37,7 +37,6 @@ describe("any", () => {
         ]);
         assert.equal(v, 2);    
     });
-
     
     it("resolves with two rejections and a resolve ordered", async () => {
         const v = await Promise.any([
@@ -56,4 +55,22 @@ describe("any", () => {
         ]);
         assert.equal(v, 2);
     });
+
+    it('any should return bluebird promise', () => {
+        const v = Promise.any([
+            Promise.reject(0), 
+            Promise.reject(1),
+            Promise.resolve(2)
+        ]);
+        assert.ok(v instanceof Promise)
+    })
+
+    it('prototype.any should not return bluebird promise', () => {
+        const v = Promise.prototype.any([
+            Promise.reject(0), 
+            Promise.reject(1),
+            Promise.resolve(2)
+        ]);
+        assert.equal(v instanceof Promise, false)
+    })
 });
