@@ -3,7 +3,7 @@ module.exports = (Bluebird) => {
       return Bluebird.resolve((async () => { 
         const promises = await this;
         const length = promises.length;
-        let ret = Array(length);
+        let ret = [];
         
         for(let index = 0; index <= promises.length-1; index++){
           const value = await iterator(await promises[index], index, length);
